@@ -6,7 +6,9 @@
 >
   <!-- Company -->
   <div class="col-12">
-    <label class="form-label fw-bolder text-dark">Company</label>
+    <label class="form-label fw-bolder text-dark"
+      >{{ "Auth.Login.Label.Company" | translate }}
+    </label>
     <input
       class="form-control"
       type="text"
@@ -22,7 +24,9 @@
 
   <!-- Username -->
   <div class="col-12">
-    <label class="form-label fw-bolder text-dark">Username</label>
+    <label class="form-label fw-bolder text-dark">{{
+      "Auth.Login.Label.Username" | translate
+    }}</label>
     <input
       class="form-control"
       type="text"
@@ -38,7 +42,9 @@
 
   <!-- Password -->
   <div class="col-12">
-    <label class="form-label fw-bolder text-dark">Password</label>
+    <label class="form-label fw-bolder text-dark">{{
+      "Auth.Login.Label.Password" | translate
+    }}</label>
     <input
       class="form-control"
       type="password"
@@ -54,6 +60,8 @@
 
   <!-- Submit -->
   <div class="col-12 mt-10">
-    <button class="btn btn-primary btn-lg w-100" type="submit">Continue</button>
+    <button class="btn btn-primary btn-lg w-100" type="submit">
+      {{ "Auth.Login.Button.SignIn" | translate }}
+    </button>
   </div>
 </form>
