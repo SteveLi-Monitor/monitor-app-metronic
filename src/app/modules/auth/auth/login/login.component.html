@@ -1,0 +1,59 @@
+<form
+  class="row g-5"
+  novalidate
+  [formGroup]="loginForm"
+  (ngSubmit)="onSubmit()"
+>
+  <!-- Company -->
+  <div class="col-12">
+    <label class="form-label fw-bolder text-dark">Company</label>
+    <input
+      class="form-control"
+      type="text"
+      formControlName="company"
+      [ngClass]="{
+        'is-invalid':
+          loginForm.controls['company'].invalid && loginFormSubmitAttempt,
+        'is-valid':
+          loginForm.controls['company'].valid && loginFormSubmitAttempt
+      }"
+    />
+  </div>
+
+  <!-- Username -->
+  <div class="col-12">
+    <label class="form-label fw-bolder text-dark">Username</label>
+    <input
+      class="form-control"
+      type="text"
+      formControlName="username"
+      [ngClass]="{
+        'is-invalid':
+          loginForm.controls['username'].invalid && loginFormSubmitAttempt,
+        'is-valid':
+          loginForm.controls['username'].valid && loginFormSubmitAttempt
+      }"
+    />
+  </div>
+
+  <!-- Password -->
+  <div class="col-12">
+    <label class="form-label fw-bolder text-dark">Password</label>
+    <input
+      class="form-control"
+      type="password"
+      formControlName="password"
+      [ngClass]="{
+        'is-invalid':
+          loginForm.controls['password'].invalid && loginFormSubmitAttempt,
+        'is-valid':
+          loginForm.controls['password'].valid && loginFormSubmitAttempt
+      }"
+    />
+  </div>
+
+  <!-- Submit -->
+  <div class="col-12 mt-10">
+    <button class="btn btn-primary btn-lg w-100" type="submit">Continue</button>
+  </div>
+</form>
