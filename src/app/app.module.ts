@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
 
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -8,7 +9,12 @@ import { AppComponent } from './app.component';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, TranslateModule.forRoot(), AppRoutingModule],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    TranslateModule.forRoot(),
+    AppRoutingModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })
