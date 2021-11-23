@@ -12,7 +12,7 @@ export class UsersClient {
   constructor(private httpClient: HttpClient) {}
 
   signIn(req: SignInReq): Observable<SignInResp> {
-    return this.httpClient.post<SignInResp>(this.baseUrl, req);
+    return this.httpClient.post<SignInResp>(this.baseUrl + '/SignIn', req);
   }
 }
 

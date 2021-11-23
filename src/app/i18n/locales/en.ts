@@ -1,6 +1,11 @@
 export const EnLocale = {
   language: 'en',
   data: {
+    Common: {
+      Validation: {
+        Required: '{{name}} is required',
+      },
+    },
     Auth: {
       Login: {
         Label: {
@@ -10,6 +15,10 @@ export const EnLocale = {
         },
         Button: {
           SignIn: 'Sign In',
+          SigningIn: 'Sign In...',
+        },
+        Div: {
+          SignInFailed: 'Sign in failed',
         },
       },
     },

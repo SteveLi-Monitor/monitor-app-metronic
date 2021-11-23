@@ -4,22 +4,38 @@
   [formGroup]="loginForm"
   (ngSubmit)="onSubmit()"
 >
+  <!-- Error -->
+  <div *ngIf="signInFailed" class="col-12">
+    <div class="alert alert-danger">
+      {{ "Auth.Login.Div.SignInFailed" | translate }}
+    </div>
+  </div>
+
   <!-- Company -->
   <div class="col-12">
     <label class="form-label fw-bolder text-dark"
       >{{ "Auth.Login.Label.Company" | translate }}
     </label>
-    <input
-      class="form-control"
-      type="text"
-      formControlName="company"
+    <select
+      class="form-select"
+      formControlName="companyNumber"
       [ngClass]="{
         'is-invalid':
-          loginForm.controls['company'].invalid && loginFormSubmitAttempt,
+          loginForm.controls['companyNumber'].invalid && loginFormSubmitAttempt,
         'is-valid':
-          loginForm.controls['company'].valid && loginFormSubmitAttempt
+          loginForm.controls['companyNumber'].valid && loginFormSubmitAttempt
       }"
-    />
+    >
+      <option *ngFor="let company of companies" [value]="company.companyNumber">
+        {{ company.companyNumber + " " + company.name }}
+      </option>
+    </select>
+    <div class="invalid-feedback">
+      {{
+        "Common.Validation.Required"
+          | translate: { name: "Auth.Login.Label.Company" | translate }
+      }}
+    </div>
   </div>
 
   <!-- Username -->
@@ -38,6 +54,12 @@
           loginForm.controls['username'].valid && loginFormSubmitAttempt
       }"
     />
+    <div class="invalid-feedback">
+      {{
+        "Common.Validation.Required"
+          | translate: { name: "Auth.Login.Label.Username" | translate }
+      }}
+    </div>
   </div>
 
   <!-- Password -->
@@ -56,12 +78,24 @@
           loginForm.controls['password'].valid && loginFormSubmitAttempt
       }"
     />
+    <div class="invalid-feedback">
+      {{
+        "Common.Validation.Required"
+          | translate: { name: "Auth.Login.Label.Password" | translate }
+      }}
+    </div>
   </div>
 
   <!-- Submit -->
   <div class="col-12 mt-10">
     <button class="btn btn-primary btn-lg w-100" type="submit">
-      {{ "Auth.Login.Button.SignIn" | translate }}
+      <ng-container *ngIf="isSigningIn"
+        >{{ "Auth.Login.Button.SigningIn" | translate
+        }}<span class="spinner-border spinner-border-sm ms-2"></span
+      ></ng-container>
+      <ng-container *ngIf="!isSigningIn">{{
+        "Auth.Login.Button.SignIn" | translate
+      }}</ng-container>
     </button>
   </div>
 </form>
