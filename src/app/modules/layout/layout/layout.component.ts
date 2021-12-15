@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ToggleComponent } from 'src/app/_metronic/kt/components';
+import {
+  MenuComponent,
+  ToggleComponent,
+} from 'src/app/_metronic/kt/components';
 
 @Component({
   selector: 'app-layout',
@@ -11,5 +14,6 @@ export class LayoutComponent implements OnInit {
 
   ngOnInit(): void {
     ToggleComponent.bootstrap();
+    MenuComponent.bootstrap();
   }
 }
