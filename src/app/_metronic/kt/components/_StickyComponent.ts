@@ -150,6 +150,8 @@ class StickyComponent {
       if (option) {
         return getAttributeValueByBreakpoint(option)
       }
+	  
+      return undefined
     }
   }
 

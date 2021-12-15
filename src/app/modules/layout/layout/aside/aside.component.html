@@ -2,12 +2,18 @@
 <div class="aside-logo flex-column-auto">
   <!-- Begin: Logo -->
   <a routerLink="">
-    <img class="h-25px" src="./assets/media/temp/logo-1.svg" alt="Logo"
+    <img class="h-25px logo" src="./assets/media/temp/logo-1.svg" alt="Logo"
   /></a>
   <!-- End: Logo -->
 
   <!-- Begin: Aside toggle -->
-  <div class="btn btn-icon w-auto px-0 btn-active-color-primary aside-toggle">
+  <div
+    class="btn btn-icon w-auto px-0 btn-active-color-primary aside-toggle"
+    data-kt-toggle="true"
+    data-kt-toggle-state="active"
+    data-kt-toggle-target="body"
+    data-kt-toggle-name="aside-minimize"
+  >
     <span
       class="svg-icon svg-icon-1 rotate-180"
       [inlineSVG]="'./assets/media/icons/duotune/arrows/arr079.svg'"
