@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 
 import { TranslateModule } from '@ngx-translate/core';
+import { InlineSVGModule } from 'ng-inline-svg-2';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -13,6 +14,7 @@ import { AppComponent } from './app.component';
     BrowserModule,
     HttpClientModule,
     TranslateModule.forRoot(),
+    InlineSVGModule.forRoot(),
     AppRoutingModule,
   ],
   providers: [],
