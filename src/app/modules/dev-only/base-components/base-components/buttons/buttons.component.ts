@@ -8,5 +8,17 @@ import { Component, OnInit } from '@angular/core';
 export class ButtonsComponent implements OnInit {
   constructor() {}
 
+  showIndicator: 'on' | null = null;
+
   ngOnInit(): void {}
+
+  onClick(): void {
+    if (!this.showIndicator) {
+      this.showIndicator = 'on';
+
+      setTimeout(() => {
+        this.showIndicator = null;
+      }, 1000);
+    }
+  }
 }
