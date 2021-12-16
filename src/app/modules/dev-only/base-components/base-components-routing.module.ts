@@ -4,6 +4,7 @@ import { AlertsComponent } from './base-components/alerts/alerts.component';
 import { BaseComponentsComponent } from './base-components/base-components.component';
 import { ButtonsComponent } from './base-components/buttons/buttons.component';
 import { ModalsComponent } from './base-components/modals/modals.component';
+import { TabsComponent } from './base-components/tabs/tabs.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,10 @@ const routes: Routes = [
       {
         path: 'modals',
         component: ModalsComponent,
+      },
+      {
+        path: 'tabs',
+        component: TabsComponent,
       },
       {
         path: '',
