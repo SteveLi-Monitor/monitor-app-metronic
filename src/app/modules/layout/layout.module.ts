@@ -8,6 +8,7 @@ import { LayoutComponent } from './layout/layout.component';
 import { AsideComponent } from './layout/aside/aside.component';
 import { AsideMenuComponent } from './layout/aside/aside-menu/aside-menu.component';
 import { HeaderComponent } from './layout/header/header.component';
+import { ContentComponent } from './layout/content/content.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { HeaderComponent } from './layout/header/header.component';
     AsideComponent,
     AsideMenuComponent,
     HeaderComponent,
+    ContentComponent,
   ],
   imports: [CommonModule, InlineSVGModule, LayoutRoutingModule],
 })
