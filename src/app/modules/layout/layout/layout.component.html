@@ -1,4 +1,4 @@
-<div class="d-flex flex-row flex-column-fluid">
+<div class="flex-column-fluid d-flex flex-row">
   <app-aside
     class="aside aside-light"
     data-kt-drawer="true"
@@ -9,12 +9,10 @@
     data-kt-drawer-direction="start"
     data-kt-drawer-toggle="#aside_mobile_toggle"
   ></app-aside>
-  <div class="wrapper d-flex flex-column flex-row-fluid">
-    <app-header class="header align-items-stretch"></app-header>
-    <div class="content d-flex flex-column flex-column-fluid">
-      <div class="d-flex flex-column-fluid">
-        <app-content class="container-xxl"></app-content>
-      </div>
+  <div class="flex-row-fluid wrapper d-flex flex-column">
+    <app-header class="header container-fluid"></app-header>
+    <div class="flex-column-fluid content d-flex flex-column">
+      <app-content class="flex-column-fluid container-xxl"></app-content>
     </div>
   </div>
 </div>
