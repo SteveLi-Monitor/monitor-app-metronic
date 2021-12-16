@@ -8,6 +8,7 @@ import { BaseComponentsComponent } from './base-components/base-components.compo
 import { ButtonsComponent } from './base-components/buttons/buttons.component';
 import { AlertsComponent } from './base-components/alerts/alerts.component';
 import { ModalsComponent } from './base-components/modals/modals.component';
+import { TabsComponent } from './base-components/tabs/tabs.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { ModalsComponent } from './base-components/modals/modals.component';
     ButtonsComponent,
     AlertsComponent,
     ModalsComponent,
+    TabsComponent,
   ],
   imports: [CommonModule, InlineSVGModule, BaseComponentsRoutingModule],
 })
