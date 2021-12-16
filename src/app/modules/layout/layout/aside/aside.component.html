@@ -1,0 +1,45 @@
+<!-- Begin: Brand -->
+<div class="flex-column-auto aside-logo">
+  <!-- Begin: Logo -->
+  <a routerLink="">
+    <img class="h-25px logo" src="./assets/media/temp/logo-1.svg" />
+  </a>
+  <!-- End: Logo -->
+
+  <!-- Begin: Aside toggle -->
+  <div
+    class="btn btn-icon w-auto px-0 btn-active-color-primary aside-toggle"
+    data-kt-toggle="true"
+    data-kt-toggle-state="active"
+    data-kt-toggle-target="#layout"
+    data-kt-toggle-name="aside-minimize"
+  >
+    <span
+      class="svg-icon svg-icon-1 rotate-180"
+      [inlineSVG]="'./assets/media/icons/duotune/arrows/arr079.svg'"
+    ></span>
+  </div>
+  <!-- End: Aside toggle -->
+</div>
+<!-- End: Brand -->
+
+<!-- Begin: Aside menu -->
+<div class="flex-column-fluid aside-menu">
+  <div class="hover-scroll-overlay-y my-5 my-lg-5">
+    <div
+      class="
+        menu
+        menu-column
+        menu-title-gray-800
+        menu-state-title-primary
+        menu-state-icon-primary
+        menu-state-bullet-primary
+        menu-arrow-gray-500
+      "
+      data-kt-menu="true"
+    >
+      <app-aside-menu></app-aside-menu>
+    </div>
+  </div>
+</div>
+<!-- End: Aside menu -->

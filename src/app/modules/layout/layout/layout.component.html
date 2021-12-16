@@ -1,0 +1,27 @@
+<div
+  id="layout"
+  class="
+    flex-column-fluid
+    d-flex
+    flex-row
+    header-fixed header-tablet-and-mobile-fixed
+    aside-enabled aside-fixed
+  "
+>
+  <app-aside
+    class="aside aside-light"
+    data-kt-drawer="true"
+    data-kt-drawer-name="aside"
+    data-kt-drawer-activate="{default: true, lg: false}"
+    data-kt-drawer-overlay="true"
+    data-kt-drawer-width="{default:'200px', '300px': '250px'}"
+    data-kt-drawer-direction="start"
+    data-kt-drawer-toggle="#aside_mobile_toggle"
+  ></app-aside>
+  <div class="flex-row-fluid wrapper d-flex flex-column">
+    <app-header class="header container-fluid"></app-header>
+    <div class="flex-column-fluid content d-flex flex-column">
+      <app-content class="flex-column-fluid container-xxl"></app-content>
+    </div>
+  </div>
+</div>
