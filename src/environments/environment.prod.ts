@@ -70,7 +70,7 @@ export const environment = {
           {
             id: 'FormControls',
             description: 'AsideMenu.Page.FormControls',
-            routerLink: 'dev-only/base-components/alerts',
+            routerLink: 'dev-only/forms/form-controls',
           },
         ],
       },
