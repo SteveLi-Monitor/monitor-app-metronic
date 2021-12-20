@@ -89,7 +89,7 @@
 <!-- End: Purchase -->
 
 <!-- Begin: Dev Only -->
-<div class="menu-item">
+<div *ngIf="!isProduction" class="menu-item">
   <div class="menu-content pt-8 pb-2">
     <span class="menu-section text-muted text-uppercase fs-8 ls-1">
       Dev Only
@@ -100,6 +100,7 @@
 
 <!-- Begin: Base Components -->
 <div
+  *ngIf="!isProduction"
   class="menu-item menu-accordion"
   data-kt-menu-trigger="click"
   routerLinkActive="here show"
@@ -186,6 +187,7 @@
 
 <!-- Begin: Forms -->
 <div
+  *ngIf="!isProduction"
   class="menu-item menu-accordion"
   data-kt-menu-trigger="click"
   routerLinkActive="here show"
