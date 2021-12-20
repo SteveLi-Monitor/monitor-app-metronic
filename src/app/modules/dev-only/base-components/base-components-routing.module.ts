@@ -5,6 +5,7 @@ import { BaseComponentsComponent } from './base-components/base-components.compo
 import { ButtonsComponent } from './base-components/buttons/buttons.component';
 import { ModalsComponent } from './base-components/modals/modals.component';
 import { TabsComponent } from './base-components/tabs/tabs.component';
+import { ToastsComponent } from './base-components/toasts/toasts.component';
 
 const routes: Routes = [
   {
@@ -26,6 +27,10 @@ const routes: Routes = [
       {
         path: 'tabs',
         component: TabsComponent,
+      },
+      {
+        path: 'toasts',
+        component: ToastsComponent,
       },
       {
         path: '',
