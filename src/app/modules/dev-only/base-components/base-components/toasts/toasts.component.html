@@ -1,0 +1,40 @@
+<!-- Begin: Base Toasts -->
+<div class="mb-10">
+  <h1 class="mb-5">Base Toasts</h1>
+  <div class="border rounded p-10 mb-5">
+    <button class="btn btn-primary" (click)="onClick()">Toggle Toast</button>
+  </div>
+</div>
+<!-- End: Base Toasts -->
+
+<!-- Begin: References -->
+<div class="mb-10">
+  <h1 class="mb-5">References</h1>
+  <a
+    class="btn btn-primary me-3"
+    href="https://preview.keenthemes.com/metronic8/demo1/documentation/base/toasts.html"
+    target="_blank"
+  >
+    Metronic
+  </a>
+  <a
+    class="btn btn-primary me-3"
+    href="https://getbootstrap.com/docs/5.0/components/toasts/"
+    target="_blank"
+  >
+    Bootstrap
+  </a>
+</div>
+<!-- End: References -->
+
+<!-- Begin: Toast -->
+<div class="position-fixed bottom-0 end-0 p-3 z-index-3">
+  <div #toast class="toast hide" role="alert">
+    <div class="toast-header">
+      <strong class="me-auto">Monitor</strong>
+      <button class="btn-close" data-bs-dismiss="toast"></button>
+    </div>
+    <div class="toast-body">Hello, world! This is a toast message.</div>
+  </div>
+</div>
+<!-- End: Toast -->

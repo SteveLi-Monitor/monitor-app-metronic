@@ -9,6 +9,7 @@ import { ButtonsComponent } from './base-components/buttons/buttons.component';
 import { AlertsComponent } from './base-components/alerts/alerts.component';
 import { ModalsComponent } from './base-components/modals/modals.component';
 import { TabsComponent } from './base-components/tabs/tabs.component';
+import { ToastsComponent } from './base-components/toasts/toasts.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { TabsComponent } from './base-components/tabs/tabs.component';
     AlertsComponent,
     ModalsComponent,
     TabsComponent,
+    ToastsComponent,
   ],
   imports: [CommonModule, InlineSVGModule, BaseComponentsRoutingModule],
 })
