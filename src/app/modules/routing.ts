@@ -8,4 +8,9 @@ export const Routing: Routes = [
         (m) => m.BaseComponentsModule
       ),
   },
+  {
+    path: 'dev-only/forms',
+    loadChildren: () =>
+      import('./dev-only/forms/forms.module').then((m) => m.FormsModule),
+  },
 ];
