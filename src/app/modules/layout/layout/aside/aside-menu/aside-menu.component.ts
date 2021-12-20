@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { AsideMenu } from './aside-menu.model';
 
 @Component({
   selector: 'app-aside-menu',
@@ -8,9 +9,12 @@ import { environment } from 'src/environments/environment';
 export class AsideMenuComponent implements OnInit {
   constructor() {}
 
-  get isProduction(): boolean {
-    return environment.production;
-  }
+  asideMenu: AsideMenu | undefined;
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.asideMenu = environment.asideMenu;
+    if (!environment.production) {
+      this.asideMenu.sections.push(environment.devOnlySection);
+    }
+  }
 }
