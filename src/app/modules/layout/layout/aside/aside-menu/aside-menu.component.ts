@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-aside-menu',
@@ -6,6 +7,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AsideMenuComponent implements OnInit {
   constructor() {}
+
+  get isProduction(): boolean {
+    return environment.production;
+  }
 
   ngOnInit(): void {}
 }
