@@ -13,11 +13,13 @@ export const EnLocale = {
       },
       Module: {
         Manufacturing: 'Manufacturing',
+        Settings: 'Settings',
         BaseComponents: 'Base Components',
         Forms: 'Forms',
       },
       Page: {
         Proc1: 'Proc1',
+        UserRoles: 'User Roles',
         Alerts: 'Alerts',
         Buttons: 'Buttons',
         Modals: 'Modals',
@@ -39,6 +41,19 @@ export const EnLocale = {
         },
         Div: {
           SignInFailed: 'Sign in failed',
+        },
+      },
+    },
+    Settings: {
+      UserRoles: {
+        Lable: {
+          UserRole: 'User Role',
+        },
+        Button: {
+          AddUserRole: 'Add User Role',
+        },
+        Tab: {
+          AllowedPages: 'Allowed Pages',
         },
       },
     },

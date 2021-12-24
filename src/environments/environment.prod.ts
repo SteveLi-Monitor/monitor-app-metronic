@@ -22,59 +22,22 @@ export const environment = {
               },
             ],
           },
+          {
+            id: 'Settings',
+            description: 'AsideMenu.Module.Settings',
+            svg: './assets/media/icons/duotune/general/gen022.svg',
+            pages: [
+              {
+                id: 'UserRoles',
+                description: 'AsideMenu.Page.UserRoles',
+                routerLink: '/settings/user-roles',
+              },
+            ],
+          },
         ],
       },
     ],
   },
 
-  devOnlySection: {
-    id: 'DevOnly',
-    description: 'AsideMenu.Section.DevOnly',
-    modules: [
-      {
-        id: 'BaseComponents',
-        description: 'AsideMenu.Module.BaseComponents',
-        svg: './assets/media/icons/duotune/general/gen022.svg',
-        pages: [
-          {
-            id: 'Alerts',
-            description: 'AsideMenu.Page.Alerts',
-            routerLink: 'dev-only/base-components/alerts',
-          },
-          {
-            id: 'Buttons',
-            description: 'AsideMenu.Page.Buttons',
-            routerLink: 'dev-only/base-components/buttons',
-          },
-          {
-            id: 'Modals',
-            description: 'AsideMenu.Page.Modals',
-            routerLink: 'dev-only/base-components/modals',
-          },
-          {
-            id: 'Tabs',
-            description: 'AsideMenu.Page.Tabs',
-            routerLink: 'dev-only/base-components/tabs',
-          },
-          {
-            id: 'Toasts',
-            description: 'AsideMenu.Page.Toasts',
-            routerLink: 'dev-only/base-components/toasts',
-          },
-        ],
-      },
-      {
-        id: 'Forms',
-        description: 'AsideMenu.Module.Forms',
-        svg: './assets/media/icons/duotune/general/gen022.svg',
-        pages: [
-          {
-            id: 'FormControls',
-            description: 'AsideMenu.Page.FormControls',
-            routerLink: 'dev-only/forms/form-controls',
-          },
-        ],
-      },
-    ],
-  },
+  devOnlySection: {},
 };

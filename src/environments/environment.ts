@@ -26,6 +26,18 @@ export const environment = {
               },
             ],
           },
+          {
+            id: 'Settings',
+            description: 'AsideMenu.Module.Settings',
+            svg: './assets/media/icons/duotune/general/gen022.svg',
+            pages: [
+              {
+                id: 'UserRoles',
+                description: 'AsideMenu.Page.UserRoles',
+                routerLink: '/settings/user-roles',
+              },
+            ],
+          },
         ],
       },
     ],

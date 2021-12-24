@@ -13,6 +13,11 @@ export class CanLoadDevOnlyModules implements CanLoad {
 
 export const Routing: Routes = [
   {
+    path: 'settings',
+    loadChildren: () =>
+      import('./settings/settings.module').then((m) => m.SettingsModule),
+  },
+  {
     path: 'dev-only/base-components',
     loadChildren: () =>
       import('./dev-only/base-components/base-components.module').then(
