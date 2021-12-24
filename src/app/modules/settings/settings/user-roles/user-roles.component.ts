@@ -5,6 +5,7 @@ import { UiComponent, UserRolesClient } from 'src/app/apis/user-roles.service';
 @Component({
   selector: 'app-user-roles',
   templateUrl: './user-roles.component.html',
+  styleUrls: ['./user-roles.component.scss'],
 })
 export class UserRolesComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
