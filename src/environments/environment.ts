@@ -91,6 +91,18 @@ export const environment = {
           },
         ],
       },
+      {
+        id: 'Tables',
+        description: 'Tables',
+        svg: './assets/media/icons/duotune/general/gen022.svg',
+        pages: [
+          {
+            id: 'AgGrid',
+            description: 'AG Grid',
+            routerLink: 'dev-only/tables/ag-grid',
+          },
+        ],
+      },
     ],
   },
 };

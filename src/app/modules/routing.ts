@@ -31,4 +31,10 @@ export const Routing: Routes = [
       import('./dev-only/forms/forms.module').then((m) => m.FormsModule),
     canLoad: [CanLoadDevOnlyModules],
   },
+  {
+    path: 'dev-only/tables',
+    loadChildren: () =>
+      import('./dev-only/tables/tables.module').then((m) => m.TablesModule),
+    canLoad: [CanLoadDevOnlyModules],
+  },
 ];
