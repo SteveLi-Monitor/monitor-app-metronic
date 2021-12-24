@@ -1,20 +1,40 @@
 <div class="card">
-  <div class="card-body">
-    <!-- Begin: User Role Datalist -->
-    <label class="form-label">
-      {{ "Settings.UserRoles.Lable.UserRole" | translate }}
-    </label>
-    <input class="form-control" list="userRoleDatalistOptions" />
-    <datalist id="userRoleDatalistOptions">
-      <option *ngFor="let userRole of userRoles" [ngValue]="userRole">
-        {{ userRole.name }}
-      </option>
-      <option value="San Francisco"></option>
-      <option value="New York"></option>
-      <option value="Seattle"></option>
-      <option value="Los Angeles"></option>
-      <option value="Chicago"></option>
-    </datalist>
-    <!-- End: User Role Datalist -->
+  <div class="card-body pb-0">
+    <div class="mb-10">
+      <!-- Begin: User Role Select -->
+      <label class="form-label">
+        {{ "Settings.UserRoles.Lable.UserRole" | translate }}
+      </label>
+      <div class="input-group">
+        <!-- Select -->
+        <select class="form-select">
+          <option hidden></option>
+          <option *ngFor="let userRole of userRoles" [ngValue]="userRole">
+            {{ userRole.name }}
+          </option>
+        </select>
+
+        <!-- Button -->
+        <button class="btn btn-primary ms-3">
+          {{ "Settings.UserRoles.Button.AddUserRole" | translate }}
+        </button>
+      </div>
+      <!-- End: User Role Select -->
+    </div>
+    <div>
+      <!-- Begin: Tab -->
+      <ul class="nav nav-tabs nav-line-tabs nav-line-tabs-2x fs-6">
+        <li class="nav-item">
+          <a
+            class="nav-link text-active-primary active"
+            data-bs-toggle="tab"
+            href="#tab_pane_1"
+          >
+            {{ "Settings.UserRoles.Tab.AllowedPages" | translate }}
+          </a>
+        </li>
+      </ul>
+      <!-- End: Tab -->
+    </div>
   </div>
 </div>

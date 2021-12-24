@@ -49,6 +49,12 @@ export const EnLocale = {
         Lable: {
           UserRole: 'User Role',
         },
+        Button: {
+          AddUserRole: 'Add User Role',
+        },
+        Tab: {
+          AllowedPages: 'Allowed Pages',
+        },
       },
     },
   },
