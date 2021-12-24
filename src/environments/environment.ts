@@ -45,48 +45,48 @@ export const environment = {
 
   devOnlySection: {
     id: 'DevOnly',
-    description: 'AsideMenu.Section.DevOnly',
+    description: 'Dev Only',
     modules: [
       {
         id: 'BaseComponents',
-        description: 'AsideMenu.Module.BaseComponents',
+        description: 'Base Components',
         svg: './assets/media/icons/duotune/general/gen022.svg',
         pages: [
           {
             id: 'Alerts',
-            description: 'AsideMenu.Page.Alerts',
+            description: 'Alerts',
             routerLink: 'dev-only/base-components/alerts',
           },
           {
             id: 'Buttons',
-            description: 'AsideMenu.Page.Buttons',
+            description: 'Buttons',
             routerLink: 'dev-only/base-components/buttons',
           },
           {
             id: 'Modals',
-            description: 'AsideMenu.Page.Modals',
+            description: 'Modals',
             routerLink: 'dev-only/base-components/modals',
           },
           {
             id: 'Tabs',
-            description: 'AsideMenu.Page.Tabs',
+            description: 'Tabs',
             routerLink: 'dev-only/base-components/tabs',
           },
           {
             id: 'Toasts',
-            description: 'AsideMenu.Page.Toasts',
+            description: 'Toasts',
             routerLink: 'dev-only/base-components/toasts',
           },
         ],
       },
       {
         id: 'Forms',
-        description: 'AsideMenu.Module.Forms',
+        description: 'Forms',
         svg: './assets/media/icons/duotune/general/gen022.svg',
         pages: [
           {
             id: 'FormControls',
-            description: 'AsideMenu.Page.FormControls',
+            description: 'Form Controls',
             routerLink: 'dev-only/forms/form-controls',
           },
         ],
