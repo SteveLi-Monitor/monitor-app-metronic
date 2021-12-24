@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
 
+  apiDomain: 'localhost:5001',
   baseUrl: 'http://localhost:5001/api',
 
   asideMenu: {
