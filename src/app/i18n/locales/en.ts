@@ -44,5 +44,12 @@ export const EnLocale = {
         },
       },
     },
+    Settings: {
+      UserRoles: {
+        Lable: {
+          UserRole: 'User Role',
+        },
+      },
+    },
   },
 };
