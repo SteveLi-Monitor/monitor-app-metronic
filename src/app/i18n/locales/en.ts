@@ -13,11 +13,13 @@ export const EnLocale = {
       },
       Module: {
         Manufacturing: 'Manufacturing',
+        Settings: 'Settings',
         BaseComponents: 'Base Components',
         Forms: 'Forms',
       },
       Page: {
         Proc1: 'Proc1',
+        UserRoles: 'User Roles',
         Alerts: 'Alerts',
         Buttons: 'Buttons',
         Modals: 'Modals',
