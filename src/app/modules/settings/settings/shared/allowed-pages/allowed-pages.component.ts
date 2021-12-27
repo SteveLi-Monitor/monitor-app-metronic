@@ -1,8 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { ColDef } from 'ag-grid-community';
+import { GridOptions, ValueGetterParams } from 'ag-grid-community';
 import { Subscription } from 'rxjs';
-import { AgGridUtil } from 'src/app/modules/shared/ag-grid/AgGridUtil';
 import { AllowedPage } from './allowed-pages.model';
 
 @Component({
@@ -13,43 +12,53 @@ import { AllowedPage } from './allowed-pages.model';
 export class AllowedPagesComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
 
-  constructor(private translateService: TranslateService) {
-    this.initColDefs();
-  }
+  constructor(private translateService: TranslateService) {}
 
-  columnDefs: ColDef[] = [];
+  gridOptions: GridOptions = {
+    columnDefs: [
+      {
+        headerName: this.translateService.instant(
+          'Settings.Shared.AllowedPages.ColumnHeader.Section'
+        ),
+        field: 'section',
+        valueGetter: (params: ValueGetterParams) => {
+          const data = params.data as AllowedPage;
+          return this.translateService.instant(data.section.description);
+        },
+      },
+      {
+        headerName: this.translateService.instant(
+          'Settings.Shared.AllowedPages.ColumnHeader.Module'
+        ),
+        field: 'module',
+        valueGetter: (params: ValueGetterParams) => {
+          const data = params.data as AllowedPage;
+          return this.translateService.instant(data.module.description);
+        },
+      },
+      {
+        headerName: this.translateService.instant(
+          'Settings.Shared.AllowedPages.ColumnHeader.Page'
+        ),
+        field: 'page',
+        valueGetter: (params: ValueGetterParams) => {
+          const data = params.data as AllowedPage;
+          return this.translateService.instant(data.page.description);
+        },
+      },
+      {
+        headerName: this.translateService.instant(
+          'Settings.Shared.AllowedPages.ColumnHeader.IsAuthorized'
+        ),
+        field: 'isAuthorized',
+      },
+    ],
+  };
 
   @Input()
   rowData: AllowedPage[] = [];
 
   ngOnInit(): void {}
-
-  private initColDefs() {
-    this.columnDefs = [
-      {
-        colId: 'Settings.Shared.AllowedPages.ColumnHeader.Section',
-        field: 'section',
-      },
-      {
-        colId: 'Settings.Shared.AllowedPages.ColumnHeader.Module',
-        field: 'module',
-      },
-      {
-        colId: 'Settings.Shared.AllowedPages.ColumnHeader.Page',
-        field: 'page',
-      },
-      {
-        colId: 'Settings.Shared.AllowedPages.ColumnHeader.IsAuthorized',
-        field: 'isAuthorized',
-      },
-    ];
-
-    const subs = AgGridUtil.initColDefTranslations(
-      this.translateService,
-      this.columnDefs
-    );
-    this.subscriptions.push(...subs);
-  }
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((x) => x.unsubscribe());
