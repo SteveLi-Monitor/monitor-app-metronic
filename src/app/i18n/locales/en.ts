@@ -46,6 +46,16 @@ export const EnLocale = {
         Tab: {
           AllowedPages: 'Allowed Pages',
         },
+        AllowedPages: {
+          H5: {
+            AllowedPages: 'Allowed Pages',
+          },
+          ColumnHeader: {
+            Section: 'Section',
+            Module: 'Module',
+            Page: 'Page',
+          },
+        },
       },
     },
     Tables: {
