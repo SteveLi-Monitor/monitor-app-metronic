@@ -1,8 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ColDef } from 'ag-grid-community';
 import { Subscription } from 'rxjs';
 import { AgGridUtil } from 'src/app/modules/shared/ag-grid/AgGridUtil';
+import { AllowedPage } from './allowed-pages.model';
 
 @Component({
   selector: 'app-allowed-pages',
@@ -18,23 +19,28 @@ export class AllowedPagesComponent implements OnInit, OnDestroy {
 
   columnDefs: ColDef[] = [];
 
-  rowData: any[] = [];
+  @Input()
+  rowData: AllowedPage[] = [];
 
   ngOnInit(): void {}
 
   private initColDefs() {
     this.columnDefs = [
       {
-        colId: 'Settings.UserRoles.AllowedPages.ColumnHeader.Section',
+        colId: 'Settings.Shared.AllowedPages.ColumnHeader.Section',
         field: 'section',
       },
       {
-        colId: 'Settings.UserRoles.AllowedPages.ColumnHeader.Module',
+        colId: 'Settings.Shared.AllowedPages.ColumnHeader.Module',
         field: 'module',
       },
       {
-        colId: 'Settings.UserRoles.AllowedPages.ColumnHeader.Page',
+        colId: 'Settings.Shared.AllowedPages.ColumnHeader.Page',
         field: 'page',
+      },
+      {
+        colId: 'Settings.Shared.AllowedPages.ColumnHeader.IsAuthorized',
+        field: 'isAuthorized',
       },
     ];
 
