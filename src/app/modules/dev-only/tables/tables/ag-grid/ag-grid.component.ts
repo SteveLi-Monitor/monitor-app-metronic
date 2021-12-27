@@ -1,18 +1,30 @@
 import { Component, OnInit } from '@angular/core';
-import { ColDef } from 'ag-grid-community';
+import { TranslateService } from '@ngx-translate/core';
+import { GridOptions } from 'ag-grid-community';
 
 @Component({
   selector: 'app-ag-grid',
   templateUrl: './ag-grid.component.html',
 })
 export class AgGridComponent implements OnInit {
-  constructor() {}
+  constructor(private translateService: TranslateService) {}
 
-  columnDefs: ColDef[] = [
-    { field: 'make' },
-    { field: 'model' },
-    { field: 'price' },
-  ];
+  gridOptions: GridOptions = {
+    columnDefs: [
+      {
+        headerName: this.translateService.instant('Tables.AgGrid.Header.Make'),
+        field: 'make',
+      },
+      {
+        headerName: this.translateService.instant('Tables.AgGrid.Header.Model'),
+        field: 'model',
+      },
+      {
+        headerName: this.translateService.instant('Tables.AgGrid.Header.Price'),
+        field: 'price',
+      },
+    ],
+  };
 
   rowData = [
     { make: 'Toyota', model: 'Celica', price: 35000 },
