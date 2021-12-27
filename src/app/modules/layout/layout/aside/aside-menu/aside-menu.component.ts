@@ -12,9 +12,12 @@ export class AsideMenuComponent implements OnInit {
   asideMenu: AsideMenu | undefined;
 
   ngOnInit(): void {
-    this.asideMenu = environment.asideMenu;
+    this.asideMenu = JSON.parse(JSON.stringify(environment.asideMenu));
+
     if (!environment.production) {
-      this.asideMenu.sections.push(environment.devOnlySection);
+      this.asideMenu!.sections.push(
+        JSON.parse(JSON.stringify(environment.devOnlySection))
+      );
     }
   }
 }
