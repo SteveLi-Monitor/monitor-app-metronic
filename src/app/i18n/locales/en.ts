@@ -36,6 +36,19 @@ export const EnLocale = {
       },
     },
     Settings: {
+      Shared: {
+        AllowedPages: {
+          H5: {
+            AllowedPages: 'Allowed Pages',
+          },
+          ColumnHeader: {
+            Section: 'Section',
+            Module: 'Module',
+            Page: 'Page',
+            IsAuthorized: 'Authorized',
+          },
+        },
+      },
       UserRoles: {
         Lable: {
           UserRole: 'User Role',

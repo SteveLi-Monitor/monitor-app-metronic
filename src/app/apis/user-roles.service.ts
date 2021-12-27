@@ -20,7 +20,7 @@ export interface GetAllResp {
   userRoles: {
     id: number;
     name: string;
-    allowedUiComponents: UiComponent[];
+    uiComponents: UiComponent[];
   }[];
 }
 
@@ -28,4 +28,5 @@ export interface UiComponent {
   section: string;
   module: string;
   page: string;
+  isAuthorized: boolean;
 }
