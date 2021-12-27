@@ -48,5 +48,14 @@ export const EnLocale = {
         },
       },
     },
+    Tables: {
+      AgGrid: {
+        Header: {
+          Make: 'MakeDes',
+          Model: 'ModelDes',
+          Price: 'PriceDes',
+        },
+      },
+    },
   },
 };
