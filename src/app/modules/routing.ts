@@ -32,9 +32,9 @@ export const Routing: Routes = [
     canLoad: [CanLoadDevOnlyModules],
   },
   {
-    path: 'dev-only/tables',
+    path: 'dev-only/general',
     loadChildren: () =>
-      import('./dev-only/tables/tables.module').then((m) => m.TablesModule),
+      import('./dev-only/general/general.module').then((m) => m.GeneralModule),
     canLoad: [CanLoadDevOnlyModules],
   },
 ];

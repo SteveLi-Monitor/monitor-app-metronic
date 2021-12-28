@@ -92,14 +92,14 @@ export const environment = {
         ],
       },
       {
-        id: 'Tables',
-        description: 'Tables',
+        id: 'General',
+        description: 'General',
         svg: './assets/media/icons/duotune/general/gen022.svg',
         pages: [
           {
             id: 'AgGrid',
             description: 'AG Grid',
-            routerLink: 'dev-only/tables/ag-grid',
+            routerLink: 'dev-only/general/ag-grid',
           },
         ],
       },
