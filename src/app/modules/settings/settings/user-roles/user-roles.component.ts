@@ -25,35 +25,74 @@ export class UserRolesComponent implements OnInit, OnDestroy {
 
   userRoles: UserRole[] = [];
 
+  get selectedUserRole(): UserRole | null {
+    return this.userRoleFc?.value;
+  }
+
   ngOnInit(): void {
     this.getUserRoles();
+  }
+
+  onUpdate(): void {
+    const subs = this.userRolesClient
+      .update({
+        id: this.selectedUserRole!.id,
+        uiComponents: this.allowedPages.map((allowedPage) => {
+          return {
+            section: allowedPage.section.id,
+            module: allowedPage.module.id,
+            page: allowedPage.page.id,
+            isAuthorized: allowedPage.isAuthorized,
+          };
+        }),
+      })
+      .subscribe(() => {
+        this.reload();
+      });
+
+    this.subscriptions.push(subs);
+  }
+
+  onDelete(): void {
+    const subs = this.userRolesClient
+      .delete({
+        id: this.selectedUserRole!.id,
+      })
+      .subscribe(() => {
+        this.reload();
+      });
+
+    this.subscriptions.push(subs);
   }
 
   private initUserRoleFc(): void {
     this.userRoleFc = new FormControl(null, Validators.required);
 
     const subs = this.userRoleFc.valueChanges.subscribe(
-      (userRole: UserRole) => {
-        const allowedPagesCopy: AllowedPage[] = JSON.parse(
-          JSON.stringify(this.allowedPages)
-        );
+      (userRole: UserRole | null) => {
+        if (userRole === null) {
+        } else {
+          const allowedPagesCopy: AllowedPage[] = JSON.parse(
+            JSON.stringify(this.allowedPages)
+          );
 
-        userRole.uiComponents.forEach((uiComponent) => {
-          if (uiComponent.isAuthorized) {
-            const allowPage = allowedPagesCopy.find(
-              (x) =>
-                x.section.id === uiComponent.section &&
-                x.module.id === uiComponent.module &&
-                x.page.id === uiComponent.page
-            );
+          userRole.uiComponents.forEach((uiComponent) => {
+            if (uiComponent.isAuthorized) {
+              const allowPage = allowedPagesCopy.find(
+                (x) =>
+                  x.section.id === uiComponent.section &&
+                  x.module.id === uiComponent.module &&
+                  x.page.id === uiComponent.page
+              );
 
-            if (allowPage) {
-              allowPage.isAuthorized = true;
+              if (allowPage) {
+                allowPage.isAuthorized = true;
+              }
             }
-          }
-        });
+          });
 
-        this.allowedPages = allowedPagesCopy;
+          this.allowedPages = allowedPagesCopy;
+        }
       }
     );
     this.subscriptions.push(subs);
@@ -87,6 +126,12 @@ export class UserRolesComponent implements OnInit, OnDestroy {
     });
 
     this.subscriptions.push(subs);
+  }
+
+  private reload(): void {
+    this.userRoleFc?.setValue(null);
+    this.initAllowedPages();
+    this.getUserRoles();
   }
 
   ngOnDestroy(): void {

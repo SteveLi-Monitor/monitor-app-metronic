@@ -3,8 +3,8 @@ export const EnLocale = {
   data: {
     Common: {
       Button: {
-        Ok: 'Ok',
-        Cancel: 'Cancel',
+        Update: 'Update',
+        Delete: 'Delete',
       },
       Validation: {
         Required: '{{name}} is required',

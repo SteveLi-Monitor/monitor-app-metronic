@@ -14,6 +14,14 @@ export class UserRolesClient {
   getAll(): Observable<GetAllResp> {
     return this.httpClient.get<GetAllResp>(this.baseUrl);
   }
+
+  update(req: UpdateReq): Observable<Object> {
+    return this.httpClient.post(this.baseUrl + '/Update', req);
+  }
+
+  delete(req: DeleteReq): Observable<Object> {
+    return this.httpClient.post(this.baseUrl + '/Delete', req);
+  }
 }
 
 export interface GetAllResp {
@@ -29,4 +37,13 @@ export interface UiComponent {
   module: string;
   page: string;
   isAuthorized: boolean;
+}
+
+export interface UpdateReq {
+  id: number;
+  uiComponents: UiComponent[];
+}
+
+export interface DeleteReq {
+  id: number;
 }

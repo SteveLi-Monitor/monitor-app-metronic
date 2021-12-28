@@ -22,9 +22,10 @@
       <!-- End: User Role Select -->
     </div>
     <div class="mt-10">
-      <!-- Begin: Tab -->
+      <!-- Begin: Tabs -->
       <ul class="nav nav-tabs nav-line-tabs nav-line-tabs-2x fs-6">
-        <li class="nav-item">
+        <!-- Allowed Pages -->
+        <li *ngIf="selectedUserRole" class="nav-item">
           <a
             class="nav-link text-active-primary active"
             data-bs-toggle="tab"
@@ -34,21 +35,21 @@
           </a>
         </li>
       </ul>
-      <!-- End: Tab -->
+      <!-- End: Tabs -->
     </div>
   </div>
 </div>
 
-<div class="flex-column-fluid card mt-10">
+<div *ngIf="selectedUserRole" class="flex-column-fluid card mt-10">
   <div class="card-body">
     <app-allowed-pages [rowData]="allowedPages"></app-allowed-pages>
   </div>
   <div class="card-footer d-flex justify-content-center py-5">
-    <button class="btn btn-primary me-3">
-      {{ "Common.Button.Ok" | translate }}
+    <button class="btn btn-primary me-3" (click)="onUpdate()">
+      {{ "Common.Button.Update" | translate }}
     </button>
-    <button class="btn btn-light me-3">
-      {{ "Common.Button.Cancel" | translate }}
+    <button class="btn btn-danger me-3" (click)="onDelete()">
+      {{ "Common.Button.Delete" | translate }}
     </button>
   </div>
 </div>
