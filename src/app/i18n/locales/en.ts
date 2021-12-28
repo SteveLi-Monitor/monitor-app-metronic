@@ -2,6 +2,10 @@ export const EnLocale = {
   language: 'en',
   data: {
     Common: {
+      Button: {
+        Ok: 'Ok',
+        Cancel: 'Cancel',
+      },
       Validation: {
         Required: '{{name}} is required',
       },
@@ -38,9 +42,6 @@ export const EnLocale = {
     Settings: {
       Shared: {
         AllowedPages: {
-          H5: {
-            AllowedPages: 'Allowed Pages',
-          },
           ColumnHeader: {
             Section: 'Section',
             Module: 'Module',
