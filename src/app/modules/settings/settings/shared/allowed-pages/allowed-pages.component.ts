@@ -2,6 +2,7 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { GridOptions, ValueGetterParams } from 'ag-grid-community';
 import { Subscription } from 'rxjs';
+import { CheckboxCellRendererComponent } from 'src/app/modules/shared/ag-grid/cell-renderers/checkbox-cell-renderer/checkbox-cell-renderer.component';
 import { AllowedPage } from './allowed-pages.model';
 
 @Component({
@@ -15,6 +16,13 @@ export class AllowedPagesComponent implements OnInit, OnDestroy {
   constructor(private translateService: TranslateService) {}
 
   gridOptions: GridOptions = {
+    defaultColDef: {
+      resizable: true,
+      sortable: true,
+    },
+    frameworkComponents: {
+      checkboxCellRendererComponent: CheckboxCellRendererComponent,
+    },
     columnDefs: [
       {
         headerName: this.translateService.instant(
@@ -51,6 +59,7 @@ export class AllowedPagesComponent implements OnInit, OnDestroy {
           'Settings.Shared.AllowedPages.ColumnHeader.IsAuthorized'
         ),
         field: 'isAuthorized',
+        cellRenderer: 'checkboxCellRendererComponent',
       },
     ],
   };

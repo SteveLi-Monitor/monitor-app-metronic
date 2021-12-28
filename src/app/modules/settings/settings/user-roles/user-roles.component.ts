@@ -34,8 +34,9 @@ export class UserRolesComponent implements OnInit, OnDestroy {
 
     const subs = this.userRoleFc.valueChanges.subscribe(
       (userRole: UserRole) => {
-        const allowedPagesCopy: AllowedPage[] = [];
-        Object.assign(allowedPagesCopy, this.allowedPages);
+        const allowedPagesCopy: AllowedPage[] = JSON.parse(
+          JSON.stringify(this.allowedPages)
+        );
 
         userRole.uiComponents.forEach((uiComponent) => {
           if (uiComponent.isAuthorized) {
