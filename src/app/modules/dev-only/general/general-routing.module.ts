@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AgGridComponent } from './tables/ag-grid/ag-grid.component';
-import { TablesComponent } from './tables/tables.component';
+import { AgGridComponent } from './general/ag-grid/ag-grid.component';
+import { GeneralComponent } from './general/general.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: TablesComponent,
+    component: GeneralComponent,
     children: [
       {
         path: 'ag-grid',
@@ -25,4 +25,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class TablesRoutingModule {}
+export class GeneralRoutingModule {}
