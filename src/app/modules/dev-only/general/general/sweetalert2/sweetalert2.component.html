@@ -1,0 +1,58 @@
+<!-- Begin: Base SweetAlert2 -->
+<div class="mb-10">
+  <h1 class="mb-5">Base SweetAlert2</h1>
+  <div class="border rounded p-10 mb-5">
+    <button class="btn btn-success me-3 mb-3" [swal]="successSwal">
+      Success
+    </button>
+    <button class="btn btn-warning me-3 mb-3" [swal]="warningSwal">
+      Warning
+    </button>
+    <button class="btn btn-danger me-3 mb-3" [swal]="errorSwal">Danger</button>
+  </div>
+</div>
+<!-- End: Base SweetAlert2 -->
+
+<!-- Success Swal -->
+<swal
+  #successSwal
+  text="This is a success message"
+  icon="success"
+  confirmButtonText="Ok"
+  [buttonsStyling]="false"
+  [customClass]="{ confirmButton: 'btn btn-success' }"
+></swal>
+
+<!-- Warning Swal -->
+<swal
+  #warningSwal
+  text="This is a warning message"
+  icon="warning"
+  confirmButtonText="Ok"
+  cancelButtonText="Cancel"
+  [showCancelButton]="true"
+  [buttonsStyling]="false"
+  [customClass]="{
+    confirmButton: 'btn btn-warning me-3',
+    cancelButton: 'btn btn-light'
+  }"
+  (confirm)="onConfirm()"
+  (dismiss)="onDismiss()"
+></swal>
+
+<!-- Error Swal -->
+<swal
+  #errorSwal
+  text="This is a error message"
+  icon="error"
+  confirmButtonText="Ok"
+  cancelButtonText="Cancel"
+  [showCancelButton]="true"
+  [buttonsStyling]="false"
+  [customClass]="{
+    confirmButton: 'btn btn-danger me-3',
+    cancelButton: 'btn btn-light'
+  }"
+  (confirm)="onConfirm()"
+  (dismiss)="onDismiss()"
+></swal>
