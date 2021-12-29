@@ -89,6 +89,11 @@ export const environment = {
             description: 'AG Grid',
             routerLink: 'dev-only/general/ag-grid',
           },
+          {
+            id: 'SweetAlert2',
+            description: 'SweetAlert2',
+            routerLink: 'dev-only/general/sweetalert2',
+          },
         ],
       },
     ],
