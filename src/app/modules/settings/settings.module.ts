@@ -4,6 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { TranslateModule } from '@ngx-translate/core';
 import { AgGridModule } from 'ag-grid-angular';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 import { SettingsRoutingModule } from './settings-routing.module';
 import { SettingsComponent } from './settings/settings.component';
@@ -17,6 +18,7 @@ import { AllowedPagesComponent } from './settings/shared/allowed-pages/allowed-p
     ReactiveFormsModule,
     TranslateModule,
     AgGridModule.withComponents([]),
+    SweetAlert2Module,
     SettingsRoutingModule,
   ],
 })

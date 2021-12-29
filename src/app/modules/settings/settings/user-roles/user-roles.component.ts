@@ -1,5 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
+import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { Subscription } from 'rxjs';
 import { UserRolesClient } from 'src/app/apis/user-roles.service';
 import { environment } from 'src/environments/environment';
@@ -14,7 +16,16 @@ import { UserRole } from './user-roles.model';
 export class UserRolesComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
 
-  constructor(private userRolesClient: UserRolesClient) {
+  @ViewChild('successSwal')
+  private successSwalComponent: SwalComponent | undefined;
+
+  @ViewChild('deleteSwal')
+  private deleteSwalComponent: SwalComponent | undefined;
+
+  constructor(
+    private userRolesClient: UserRolesClient,
+    private translateService: TranslateService
+  ) {
     this.initUserRoleFc();
     this.initAllowedPages();
   }
@@ -47,6 +58,13 @@ export class UserRolesComponent implements OnInit, OnDestroy {
         }),
       })
       .subscribe(() => {
+        if (this.successSwalComponent) {
+          this.successSwalComponent.text = this.translateService.instant(
+            'Common.Message.UpdateSuccessfully'
+          );
+          this.successSwalComponent.fire();
+        }
+
         this.reload();
       });
 
@@ -54,11 +72,24 @@ export class UserRolesComponent implements OnInit, OnDestroy {
   }
 
   onDelete(): void {
+    if (this.deleteSwalComponent) {
+      this.deleteSwalComponent.fire();
+    }
+  }
+
+  onConfirmDelete(): void {
     const subs = this.userRolesClient
       .delete({
         id: this.selectedUserRole!.id,
       })
       .subscribe(() => {
+        if (this.successSwalComponent) {
+          this.successSwalComponent.text = this.translateService.instant(
+            'Common.Message.DeleteSuccessfully'
+          );
+          this.successSwalComponent.fire();
+        }
+
         this.reload();
       });
 
