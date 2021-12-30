@@ -9,6 +9,7 @@
       Warning
     </button>
     <button class="btn btn-danger me-3 mb-3" [swal]="errorSwal">Danger</button>
+    <button class="btn btn-danger me-3 mb-3" [swal]="deleteSwal">Delete</button>
   </div>
 </div>
 <!-- End: Base SweetAlert2 -->
@@ -19,6 +20,7 @@
   text="This is a success message"
   icon="success"
   confirmButtonText="Ok"
+  [heightAuto]="false"
   [buttonsStyling]="false"
   [customClass]="{ confirmButton: 'btn btn-success' }"
 ></swal>
@@ -30,6 +32,7 @@
   icon="warning"
   confirmButtonText="Ok"
   cancelButtonText="Cancel"
+  [heightAuto]="false"
   [showCancelButton]="true"
   [buttonsStyling]="false"
   [customClass]="{
@@ -47,6 +50,7 @@
   icon="error"
   confirmButtonText="Ok"
   cancelButtonText="Cancel"
+  [heightAuto]="false"
   [showCancelButton]="true"
   [buttonsStyling]="false"
   [customClass]="{
@@ -55,4 +59,21 @@
   }"
   (confirm)="onConfirm()"
   (dismiss)="onDismiss()"
+></swal>
+
+<!-- Delete Swal -->
+<swal
+  #deleteSwal
+  text="The selected item will be deleted permanently"
+  icon="warning"
+  iconColor="#f27474"
+  confirmButtonText="Delete"
+  cancelButtonText="Cancel"
+  [heightAuto]="false"
+  [showCancelButton]="true"
+  [buttonsStyling]="false"
+  [customClass]="{
+    confirmButton: 'btn btn-danger me-3',
+    cancelButton: 'btn btn-light'
+  }"
 ></swal>
