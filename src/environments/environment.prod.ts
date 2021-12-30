@@ -1,8 +1,8 @@
 export const environment = {
   production: true,
 
-  apiDomain: 'localhost:5001',
-  baseUrl: 'http://localhost:5001/api',
+  apiDomain: '101.132.109.21:10001',
+  baseUrl: 'http://101.132.109.21:10001/api',
 
   asideMenu: {
     sections: [
