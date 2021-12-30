@@ -1,5 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
+import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { Subscription } from 'rxjs';
 import { UserRolesClient } from 'src/app/apis/user-roles.service';
 import { environment } from 'src/environments/environment';
@@ -14,7 +16,13 @@ import { UserRole } from './user-roles.model';
 export class UserRolesComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
 
-  constructor(private userRolesClient: UserRolesClient) {
+  @ViewChild('successSwal')
+  private successSwalComponent: SwalComponent | undefined;
+
+  constructor(
+    private userRolesClient: UserRolesClient,
+    private translateService: TranslateService
+  ) {
     this.initUserRoleFc();
     this.initAllowedPages();
   }
@@ -25,35 +33,88 @@ export class UserRolesComponent implements OnInit, OnDestroy {
 
   userRoles: UserRole[] = [];
 
+  get selectedUserRole(): UserRole | null {
+    return this.userRoleFc?.value;
+  }
+
   ngOnInit(): void {
     this.getUserRoles();
+  }
+
+  onUpdate(): void {
+    const subs = this.userRolesClient
+      .update({
+        id: this.selectedUserRole!.id,
+        uiComponents: this.allowedPages.map((allowedPage) => {
+          return {
+            section: allowedPage.section.id,
+            module: allowedPage.module.id,
+            page: allowedPage.page.id,
+            isAuthorized: allowedPage.isAuthorized,
+          };
+        }),
+      })
+      .subscribe(() => {
+        if (this.successSwalComponent) {
+          this.successSwalComponent.text = this.translateService.instant(
+            'Common.Message.UpdateSuccessfully'
+          );
+          this.successSwalComponent.fire();
+        }
+
+        this.reload();
+      });
+
+    this.subscriptions.push(subs);
+  }
+
+  onConfirmDelete(): void {
+    const subs = this.userRolesClient
+      .delete({
+        id: this.selectedUserRole!.id,
+      })
+      .subscribe(() => {
+        if (this.successSwalComponent) {
+          this.successSwalComponent.text = this.translateService.instant(
+            'Common.Message.DeleteSuccessfully'
+          );
+          this.successSwalComponent.fire();
+        }
+
+        this.reload();
+      });
+
+    this.subscriptions.push(subs);
   }
 
   private initUserRoleFc(): void {
     this.userRoleFc = new FormControl(null, Validators.required);
 
     const subs = this.userRoleFc.valueChanges.subscribe(
-      (userRole: UserRole) => {
-        const allowedPagesCopy: AllowedPage[] = JSON.parse(
-          JSON.stringify(this.allowedPages)
-        );
+      (userRole: UserRole | null) => {
+        if (userRole === null) {
+        } else {
+          const allowedPagesCopy: AllowedPage[] = JSON.parse(
+            JSON.stringify(this.allowedPages)
+          );
 
-        userRole.uiComponents.forEach((uiComponent) => {
-          if (uiComponent.isAuthorized) {
-            const allowPage = allowedPagesCopy.find(
-              (x) =>
-                x.section.id === uiComponent.section &&
-                x.module.id === uiComponent.module &&
-                x.page.id === uiComponent.page
-            );
+          userRole.uiComponents.forEach((uiComponent) => {
+            if (uiComponent.isAuthorized) {
+              const allowPage = allowedPagesCopy.find(
+                (x) =>
+                  x.section.id === uiComponent.section &&
+                  x.module.id === uiComponent.module &&
+                  x.page.id === uiComponent.page
+              );
 
-            if (allowPage) {
-              allowPage.isAuthorized = true;
+              if (allowPage) {
+                allowPage.isAuthorized = true;
+              }
             }
-          }
-        });
+          });
 
-        this.allowedPages = allowedPagesCopy;
+          this.allowedPages = allowedPagesCopy;
+        }
       }
     );
     this.subscriptions.push(subs);
@@ -87,6 +148,12 @@ export class UserRolesComponent implements OnInit, OnDestroy {
     });
 
     this.subscriptions.push(subs);
+  }
+
+  private reload(): void {
+    this.userRoleFc?.setValue(null);
+    this.initAllowedPages();
+    this.getUserRoles();
   }
 
   ngOnDestroy(): void {

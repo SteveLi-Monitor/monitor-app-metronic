@@ -2,6 +2,16 @@ export const EnLocale = {
   language: 'en',
   data: {
     Common: {
+      Button: {
+        Ok: 'Ok',
+        Update: 'Update',
+        Delete: 'Delete',
+        Cancel: 'Cancel',
+      },
+      Message: {
+        UpdateSuccessfully: 'Update successfully',
+        DeleteSuccessfully: 'Delete successfully',
+      },
       Validation: {
         Required: '{{name}} is required',
       },
@@ -38,9 +48,6 @@ export const EnLocale = {
     Settings: {
       Shared: {
         AllowedPages: {
-          H5: {
-            AllowedPages: 'Allowed Pages',
-          },
           ColumnHeader: {
             Section: 'Section',
             Module: 'Module',
@@ -58,6 +65,9 @@ export const EnLocale = {
         },
         Tab: {
           AllowedPages: 'Allowed Pages',
+        },
+        Message: {
+          UserRoleDelete: 'The selected user role will be deleted permanently',
         },
       },
     },
