@@ -48,7 +48,7 @@
     <button class="btn btn-primary me-3" (click)="onUpdate()">
       {{ "Common.Button.Update" | translate }}
     </button>
-    <button class="btn btn-danger me-3" (click)="onDelete()">
+    <button class="btn btn-danger me-3" [swal]="deleteSwal">
       {{ "Common.Button.Delete" | translate }}
     </button>
   </div>
@@ -60,6 +60,7 @@
   text=""
   icon="success"
   confirmButtonText="{{ 'Common.Button.Ok' | translate }}"
+  [heightAuto]="false"
   [buttonsStyling]="false"
   [customClass]="{ confirmButton: 'btn btn-success' }"
 ></swal>
@@ -72,6 +73,7 @@
   iconColor="#f27474"
   confirmButtonText="{{ 'Common.Button.Delete' | translate }}"
   cancelButtonText="{{ 'Common.Button.Cancel' | translate }}"
+  [heightAuto]="false"
   [showCancelButton]="true"
   [buttonsStyling]="false"
   [customClass]="{

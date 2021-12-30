@@ -19,9 +19,6 @@ export class UserRolesComponent implements OnInit, OnDestroy {
   @ViewChild('successSwal')
   private successSwalComponent: SwalComponent | undefined;
 
-  @ViewChild('deleteSwal')
-  private deleteSwalComponent: SwalComponent | undefined;
-
   constructor(
     private userRolesClient: UserRolesClient,
     private translateService: TranslateService
@@ -69,12 +66,6 @@ export class UserRolesComponent implements OnInit, OnDestroy {
       });
 
     this.subscriptions.push(subs);
-  }
-
-  onDelete(): void {
-    if (this.deleteSwalComponent) {
-      this.deleteSwalComponent.fire();
-    }
   }
 
   onConfirmDelete(): void {
