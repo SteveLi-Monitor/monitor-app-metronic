@@ -1,25 +1,50 @@
 <div class="card">
   <div class="card-body pb-0">
     <div>
-      <!-- Begin: User Role Select -->
+      <!-- Begin: User Role -->
+      <!-- Label -->
       <label class="form-label">
-        {{ "Settings.UserRoles.Lable.UserRole" | translate }}
+        {{ "Settings.UserRoles.Label.UserRole" | translate }}
+        <span *ngIf="isNew" class="badge badge-success">
+          {{ "Common.Span.New" | translate }}
+        </span>
       </label>
       <div class="input-group">
         <!-- Select -->
-        <select class="form-select" [formControl]="userRoleFc!">
+        <select *ngIf="!isNew" class="form-select" [formControl]="userRoleFc!">
           <option hidden></option>
           <option *ngFor="let userRole of userRoles" [ngValue]="userRole">
             {{ userRole.name }}
           </option>
         </select>
 
-        <!-- Button -->
-        <button class="btn btn-primary ms-3">
+        <!-- Input -->
+        <input
+          *ngIf="isNew"
+          class="form-control"
+          type="text"
+          [formControl]="newUserRoleFc"
+          [ngClass]="{
+            'is-invalid': newUserRoleFc.invalid,
+            'is-valid': newUserRoleFc.valid
+          }"
+        />
+
+        <!--Add User Role Button -->
+        <button class="btn btn-primary ms-3" (click)="onAddingUserRole()">
           {{ "Settings.UserRoles.Button.AddUserRole" | translate }}
         </button>
+
+        <!-- Invalid Feedback -->
+        <div class="invalid-feedback">
+          {{
+            "Common.Validation.Required"
+              | translate
+                : { name: "Settings.UserRoles.Label.UserRole" | translate }
+          }}
+        </div>
       </div>
-      <!-- End: User Role Select -->
+      <!-- End: User Role -->
     </div>
     <div class="mt-10">
       <!-- Begin: Tabs -->

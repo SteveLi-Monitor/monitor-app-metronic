@@ -29,9 +29,13 @@ export class UserRolesComponent implements OnInit, OnDestroy {
 
   userRoleFc: FormControl | undefined;
 
+  newUserRoleFc: FormControl = new FormControl(null, Validators.required);
+
   allowedPages: AllowedPage[] = [];
 
   userRoles: UserRole[] = [];
+
+  isNew: boolean = false;
 
   get selectedUserRole(): UserRole | null {
     return this.userRoleFc?.value;
@@ -85,6 +89,10 @@ export class UserRolesComponent implements OnInit, OnDestroy {
       });
 
     this.subscriptions.push(subs);
+  }
+
+  onAddingUserRole(): void {
+    this.isNew = true;
   }
 
   private initUserRoleFc(): void {
@@ -152,8 +160,10 @@ export class UserRolesComponent implements OnInit, OnDestroy {
 
   private reload(): void {
     this.userRoleFc?.setValue(null);
+    this.newUserRoleFc.setValue(null);
     this.initAllowedPages();
     this.getUserRoles();
+    this.isNew = false;
   }
 
   ngOnDestroy(): void {

@@ -8,6 +8,9 @@ export const EnLocale = {
         Delete: 'Delete',
         Cancel: 'Cancel',
       },
+      Span: {
+        New: 'New',
+      },
       Message: {
         UpdateSuccessfully: 'Update successfully',
         DeleteSuccessfully: 'Delete successfully',
@@ -57,7 +60,7 @@ export const EnLocale = {
         },
       },
       UserRoles: {
-        Lable: {
+        Label: {
           UserRole: 'User Role',
         },
         Button: {
