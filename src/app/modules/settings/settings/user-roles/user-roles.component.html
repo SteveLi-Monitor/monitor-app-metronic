@@ -1,31 +1,56 @@
 <div class="card">
   <div class="card-body pb-0">
     <div>
-      <!-- Begin: User Role Select -->
+      <!-- Begin: User Role -->
+      <!-- Label -->
       <label class="form-label">
-        {{ "Settings.UserRoles.Lable.UserRole" | translate }}
+        {{ "Settings.UserRoles.Label.UserRole" | translate }}
+        <span *ngIf="isNew" class="badge badge-success">
+          {{ "Common.Span.New" | translate }}
+        </span>
       </label>
       <div class="input-group">
-        <!-- Select -->
-        <select class="form-select" [formControl]="userRoleFc!">
+        <!-- Select: when isNew === false -->
+        <select *ngIf="!isNew" class="form-select" [formControl]="userRoleFc!">
           <option hidden></option>
           <option *ngFor="let userRole of userRoles" [ngValue]="userRole">
             {{ userRole.name }}
           </option>
         </select>
 
-        <!-- Button -->
-        <button class="btn btn-primary ms-3">
+        <!-- Input: when isNew === true -->
+        <input
+          *ngIf="isNew"
+          class="form-control"
+          type="text"
+          [formControl]="newUserRoleFc"
+          [ngClass]="{
+            'is-invalid': newUserRoleFc.invalid,
+            'is-valid': newUserRoleFc.valid
+          }"
+        />
+
+        <!--Add User Role Button -->
+        <button class="btn btn-primary ms-3" (click)="onAddingUserRole()">
           {{ "Settings.UserRoles.Button.AddUserRole" | translate }}
         </button>
+
+        <!-- Invalid Feedback -->
+        <div class="invalid-feedback">
+          {{
+            "Common.Validation.Required"
+              | translate
+                : { name: "Settings.UserRoles.Label.UserRole" | translate }
+          }}
+        </div>
       </div>
-      <!-- End: User Role Select -->
+      <!-- End: User Role -->
     </div>
     <div class="mt-10">
       <!-- Begin: Tabs -->
       <ul class="nav nav-tabs nav-line-tabs nav-line-tabs-2x fs-6">
         <!-- Allowed Pages -->
-        <li *ngIf="selectedUserRole" class="nav-item">
+        <li *ngIf="selectedUserRole || isNew" class="nav-item">
           <a
             class="nav-link text-active-primary active"
             data-bs-toggle="tab"
@@ -40,18 +65,34 @@
   </div>
 </div>
 
-<div *ngIf="selectedUserRole" class="flex-column-fluid card mt-10">
+<div *ngIf="selectedUserRole || isNew" class="flex-column-fluid card mt-10">
   <div class="card-body">
     <app-allowed-pages [rowData]="allowedPages"></app-allowed-pages>
   </div>
+
+  <!-- Begin: Buttons -->
   <div class="card-footer d-flex justify-content-center py-5">
-    <button class="btn btn-primary me-3" (click)="onUpdate()">
-      {{ "Common.Button.Update" | translate }}
-    </button>
-    <button class="btn btn-danger me-3" [swal]="deleteSwal">
-      {{ "Common.Button.Delete" | translate }}
-    </button>
+    <!-- isNew === true -->
+    <ng-container *ngIf="isNew">
+      <button class="btn btn-primary me-3" (click)="onAdd()">
+        {{ "Common.Button.Add" | translate }}
+      </button>
+      <button class="btn btn-light me-3" (click)="onCancelAddingUserRole()">
+        {{ "Common.Button.Cancel" | translate }}
+      </button>
+    </ng-container>
+
+    <!-- isNew === false -->
+    <ng-container *ngIf="!isNew">
+      <button class="btn btn-primary me-3" (click)="onUpdate()">
+        {{ "Common.Button.Update" | translate }}
+      </button>
+      <button class="btn btn-danger me-3" [swal]="deleteSwal">
+        {{ "Common.Button.Delete" | translate }}
+      </button>
+    </ng-container>
   </div>
+  <!-- End: Buttons -->
 </div>
 
 <!-- Success Swal -->

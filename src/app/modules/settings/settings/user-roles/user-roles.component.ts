@@ -29,9 +29,13 @@ export class UserRolesComponent implements OnInit, OnDestroy {
 
   userRoleFc: FormControl | undefined;
 
+  newUserRoleFc: FormControl = new FormControl(null, Validators.required);
+
   allowedPages: AllowedPage[] = [];
 
   userRoles: UserRole[] = [];
+
+  isNew: boolean = false;
 
   get selectedUserRole(): UserRole | null {
     return this.userRoleFc?.value;
@@ -87,6 +91,44 @@ export class UserRolesComponent implements OnInit, OnDestroy {
     this.subscriptions.push(subs);
   }
 
+  onAddingUserRole(): void {
+    this.initAllowedPages();
+    this.isNew = true;
+  }
+
+  onCancelAddingUserRole(): void {
+    this.reload();
+  }
+
+  onAdd(): void {
+    if (this.newUserRoleFc.valid) {
+      const subs = this.userRolesClient
+        .create({
+          name: this.newUserRoleFc.value,
+          uiComponents: this.allowedPages.map((allowedPage) => {
+            return {
+              section: allowedPage.section.id,
+              module: allowedPage.module.id,
+              page: allowedPage.page.id,
+              isAuthorized: allowedPage.isAuthorized,
+            };
+          }),
+        })
+        .subscribe(() => {
+          if (this.successSwalComponent) {
+            this.successSwalComponent.text = this.translateService.instant(
+              'Common.Message.AddSuccessfully'
+            );
+            this.successSwalComponent.fire();
+          }
+
+          this.reload();
+        });
+
+      this.subscriptions.push(subs);
+    }
+  }
+
   private initUserRoleFc(): void {
     this.userRoleFc = new FormControl(null, Validators.required);
 
@@ -99,17 +141,15 @@ export class UserRolesComponent implements OnInit, OnDestroy {
           );
 
           userRole.uiComponents.forEach((uiComponent) => {
-            if (uiComponent.isAuthorized) {
-              const allowPage = allowedPagesCopy.find(
-                (x) =>
-                  x.section.id === uiComponent.section &&
-                  x.module.id === uiComponent.module &&
-                  x.page.id === uiComponent.page
-              );
+            const allowPage = allowedPagesCopy.find(
+              (x) =>
+                x.section.id === uiComponent.section &&
+                x.module.id === uiComponent.module &&
+                x.page.id === uiComponent.page
+            );
 
-              if (allowPage) {
-                allowPage.isAuthorized = true;
-              }
+            if (allowPage) {
+              allowPage.isAuthorized = uiComponent.isAuthorized;
             }
           });
 
@@ -152,8 +192,10 @@ export class UserRolesComponent implements OnInit, OnDestroy {
 
   private reload(): void {
     this.userRoleFc?.setValue(null);
+    this.newUserRoleFc.setValue(null);
     this.initAllowedPages();
     this.getUserRoles();
+    this.isNew = false;
   }
 
   ngOnDestroy(): void {

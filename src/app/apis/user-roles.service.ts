@@ -15,6 +15,10 @@ export class UserRolesClient {
     return this.httpClient.get<GetAllResp>(this.baseUrl);
   }
 
+  create(req: CreateReq): Observable<Object> {
+    return this.httpClient.post(this.baseUrl + '/Create', req);
+  }
+
   update(req: UpdateReq): Observable<Object> {
     return this.httpClient.post(this.baseUrl + '/Update', req);
   }
@@ -37,6 +41,11 @@ export interface UiComponent {
   module: string;
   page: string;
   isAuthorized: boolean;
+}
+
+export interface CreateReq {
+  name: string;
+  uiComponents: UiComponent[];
 }
 
 export interface UpdateReq {
