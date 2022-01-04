@@ -141,17 +141,15 @@ export class UserRolesComponent implements OnInit, OnDestroy {
           );
 
           userRole.uiComponents.forEach((uiComponent) => {
-            if (uiComponent.isAuthorized) {
-              const allowPage = allowedPagesCopy.find(
-                (x) =>
-                  x.section.id === uiComponent.section &&
-                  x.module.id === uiComponent.module &&
-                  x.page.id === uiComponent.page
-              );
+            const allowPage = allowedPagesCopy.find(
+              (x) =>
+                x.section.id === uiComponent.section &&
+                x.module.id === uiComponent.module &&
+                x.page.id === uiComponent.page
+            );
 
-              if (allowPage) {
-                allowPage.isAuthorized = true;
-              }
+            if (allowPage) {
+              allowPage.isAuthorized = uiComponent.isAuthorized;
             }
           });
 
