@@ -4,6 +4,7 @@ export const EnLocale = {
     Common: {
       Button: {
         Ok: 'Ok',
+        Add: 'Add',
         Update: 'Update',
         Delete: 'Delete',
         Cancel: 'Cancel',
@@ -12,6 +13,7 @@ export const EnLocale = {
         New: 'New',
       },
       Message: {
+        AddSuccessfully: 'Add successfully',
         UpdateSuccessfully: 'Update successfully',
         DeleteSuccessfully: 'Delete successfully',
       },

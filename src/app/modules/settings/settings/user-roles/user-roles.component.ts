@@ -92,7 +92,41 @@ export class UserRolesComponent implements OnInit, OnDestroy {
   }
 
   onAddingUserRole(): void {
+    this.initAllowedPages();
     this.isNew = true;
+  }
+
+  onCancelAddingUserRole(): void {
+    this.reload();
+  }
+
+  onAdd(): void {
+    if (this.newUserRoleFc.valid) {
+      const subs = this.userRolesClient
+        .create({
+          name: this.newUserRoleFc.value,
+          uiComponents: this.allowedPages.map((allowedPage) => {
+            return {
+              section: allowedPage.section.id,
+              module: allowedPage.module.id,
+              page: allowedPage.page.id,
+              isAuthorized: allowedPage.isAuthorized,
+            };
+          }),
+        })
+        .subscribe(() => {
+          if (this.successSwalComponent) {
+            this.successSwalComponent.text = this.translateService.instant(
+              'Common.Message.AddSuccessfully'
+            );
+            this.successSwalComponent.fire();
+          }
+
+          this.reload();
+        });
+
+      this.subscriptions.push(subs);
+    }
   }
 
   private initUserRoleFc(): void {
