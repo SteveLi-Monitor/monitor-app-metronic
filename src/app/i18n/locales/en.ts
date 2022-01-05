@@ -32,6 +32,7 @@ export const EnLocale = {
       Page: {
         Proc1: 'Proc1',
         UserRoles: 'User Roles',
+        Users: 'Users',
       },
     },
     Auth: {
@@ -73,6 +74,15 @@ export const EnLocale = {
         },
         Message: {
           UserRoleDelete: 'The selected user role will be deleted permanently',
+        },
+      },
+      Users: {
+        Label: {
+          User: 'User',
+          UserRole: 'User Role',
+        },
+        Span: {
+          Overridden: 'Overridden',
         },
       },
     },

@@ -4,59 +4,99 @@ import { TranslateService } from '@ngx-translate/core';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { Subscription } from 'rxjs';
 import { UiComponent, UserRolesClient } from 'src/app/apis/user-roles.service';
+import { UsersClient } from 'src/app/apis/users.service';
 import { environment } from 'src/environments/environment';
 import { AllowedPage } from '../shared/allowed-pages/allowed-pages.model';
-import { UserRole } from './user-roles.model';
+import { UserRole } from '../user-roles/user-roles.model';
+import { User } from './users.model';
 
 @Component({
-  selector: 'app-user-roles',
-  templateUrl: './user-roles.component.html',
-  styleUrls: ['./user-roles.component.scss'],
+  selector: 'app-users',
+  templateUrl: './users.component.html',
+  styleUrls: ['./users.component.scss'],
 })
-export class UserRolesComponent implements OnInit, OnDestroy {
+export class UsersComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
 
   @ViewChild('successSwal')
   private successSwalComponent: SwalComponent | undefined;
 
   constructor(
+    private usersClient: UsersClient,
     private userRolesClient: UserRolesClient,
     private translateService: TranslateService
   ) {
+    this.initUserFc();
     this.initUserRoleFc();
     this.initAllowedPages();
   }
 
-  userRoleFc: FormControl | undefined;
+  userFc: FormControl | undefined;
 
-  newUserRoleFc: FormControl = new FormControl(null, Validators.required);
+  userRoleFc: FormControl | undefined;
 
   allowedPages: AllowedPage[] = [];
 
+  users: {
+    id: string;
+    username: string;
+  }[] = [];
+
   userRoles: UserRole[] = [];
 
-  isNew: boolean = false;
+  get selectedUser(): User | null {
+    return this.userFc?.value;
+  }
 
-  get selectedUserRole(): UserRole | null {
-    return this.userRoleFc?.value;
+  get isAllowedPagesOverridden(): boolean {
+    const selectedUserRole = this.userRoleFc?.value as UserRole;
+
+    if (selectedUserRole) {
+      for (
+        let index = 0;
+        index < selectedUserRole.uiComponents.length;
+        index++
+      ) {
+        const uiComponent = selectedUserRole.uiComponents[index];
+        const allowPage = this.allowedPages.find(
+          (x) =>
+            x.section.id === uiComponent.section &&
+            x.module.id === uiComponent.module &&
+            x.page.id === uiComponent.page
+        );
+
+        if (allowPage && allowPage.isAuthorized !== uiComponent.isAuthorized) {
+          return true;
+        }
+      }
+    }
+
+    return false;
   }
 
   ngOnInit(): void {
+    this.getUsers();
     this.getUserRoles();
   }
 
   onUpdate(): void {
-    const subs = this.userRolesClient
-      .update({
-        id: this.selectedUserRole!.id,
-        uiComponents: this.allowedPages.map((allowedPage) => {
-          return {
-            section: allowedPage.section.id,
-            module: allowedPage.module.id,
-            page: allowedPage.page.id,
-            isAuthorized: allowedPage.isAuthorized,
-          };
-        }),
+    let uiComponents: UiComponent[] = [];
+    if (this.isAllowedPagesOverridden || this.userRoleFc?.invalid) {
+      uiComponents = this.allowedPages.map((allowedPage) => {
+        return {
+          section: allowedPage.section.id,
+          module: allowedPage.module.id,
+          page: allowedPage.page.id,
+          isAuthorized: allowedPage.isAuthorized,
+        };
+      });
+    }
+
+    const subs = this.usersClient
+      .updateUserRoleAndUiComponents({
+        id: this.userFc?.value.id,
+        userRoleId: this.userRoleFc?.value?.id,
+        uiComponents: uiComponents,
       })
       .subscribe(() => {
         if (this.successSwalComponent) {
@@ -72,61 +112,35 @@ export class UserRolesComponent implements OnInit, OnDestroy {
     this.subscriptions.push(subs);
   }
 
-  onConfirmDelete(): void {
-    const subs = this.userRolesClient
-      .delete({
-        id: this.selectedUserRole!.id,
-      })
-      .subscribe(() => {
-        if (this.successSwalComponent) {
-          this.successSwalComponent.text = this.translateService.instant(
-            'Common.Message.DeleteSuccessfully'
-          );
-          this.successSwalComponent.fire();
-        }
+  private initUserFc(): void {
+    this.userFc = new FormControl(null, Validators.required);
 
-        this.reload();
-      });
+    const subs = this.userFc.valueChanges.subscribe(
+      (
+        user: {
+          id: string;
+          username: string;
+        } | null
+      ) => {
+        if (user !== null) {
+          const getByIdSubs = this.usersClient
+            .getById(user.id)
+            .subscribe((resp) => {
+              this.userRoleFc?.setValue(
+                this.userRoles.find((x) => x.id === resp.user.userRole?.id)
+              );
+
+              if (resp.user.uiComponents.length !== 0) {
+                this.updateAllowedPages(resp.user.uiComponents);
+              }
+            });
+
+          this.subscriptions.push(getByIdSubs);
+        }
+      }
+    );
 
     this.subscriptions.push(subs);
-  }
-
-  onAddingUserRole(): void {
-    this.initAllowedPages();
-    this.isNew = true;
-  }
-
-  onCancelAddingUserRole(): void {
-    this.reload();
-  }
-
-  onAdd(): void {
-    if (this.newUserRoleFc.valid) {
-      const subs = this.userRolesClient
-        .create({
-          name: this.newUserRoleFc.value,
-          uiComponents: this.allowedPages.map((allowedPage) => {
-            return {
-              section: allowedPage.section.id,
-              module: allowedPage.module.id,
-              page: allowedPage.page.id,
-              isAuthorized: allowedPage.isAuthorized,
-            };
-          }),
-        })
-        .subscribe(() => {
-          if (this.successSwalComponent) {
-            this.successSwalComponent.text = this.translateService.instant(
-              'Common.Message.AddSuccessfully'
-            );
-            this.successSwalComponent.fire();
-          }
-
-          this.reload();
-        });
-
-      this.subscriptions.push(subs);
-    }
   }
 
   private initUserRoleFc(): void {
@@ -134,8 +148,10 @@ export class UserRolesComponent implements OnInit, OnDestroy {
 
     const subs = this.userRoleFc.valueChanges.subscribe(
       (userRole: UserRole | null) => {
-        if (userRole !== null) {
+        if (userRole) {
           this.updateAllowedPages(userRole.uiComponents);
+        } else {
+          this.initAllowedPages();
         }
       }
     );
@@ -163,6 +179,14 @@ export class UserRolesComponent implements OnInit, OnDestroy {
     });
 
     this.allowedPages = allowedPages;
+  }
+
+  private getUsers(): void {
+    const subs = this.usersClient.getAll().subscribe((resp) => {
+      this.users = resp.users;
+    });
+
+    this.subscriptions.push(subs);
   }
 
   private getUserRoles(): void {
@@ -195,11 +219,11 @@ export class UserRolesComponent implements OnInit, OnDestroy {
   }
 
   private reload(): void {
-    this.userRoleFc?.setValue(null);
-    this.newUserRoleFc.setValue(null);
+    this.initUserFc();
+    this.initUserRoleFc();
     this.initAllowedPages();
+    this.getUsers();
     this.getUserRoles();
-    this.isNew = false;
   }
 
   ngOnDestroy(): void {
