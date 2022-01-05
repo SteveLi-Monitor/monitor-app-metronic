@@ -1,0 +1,51 @@
+<div class="card">
+  <div class="card-body pb-0">
+    <form class="row g-5">
+      <!-- Begin: User -->
+      <div class="col-12">
+        <label class="form-label">
+          {{ "Settings.Users.Label.User" | translate }}
+        </label>
+        <select class="form-select" [formControl]="userFc">
+          <option hidden></option>
+          <option *ngFor="let user of users" [ngValue]="user">
+            {{ user.username }}
+          </option>
+        </select>
+      </div>
+      <!-- End: User -->
+
+      <!-- Begin: User Roles -->
+      <div *ngIf="selectedUser" class="col-12">
+        <label class="form-label">
+          {{ "Settings.Users.Label.UserRole" | translate }}
+        </label>
+        <select class="form-select" [formControl]="userRoleFc">
+          <option hidden></option>
+          <option *ngFor="let userRole of userRoles" [ngValue]="userRole">
+            {{ userRole.name }}
+          </option>
+        </select>
+      </div>
+      <!-- End: User Roles -->
+    </form>
+    <div class="mt-10">
+      <!-- Begin: Tabs -->
+      <ul class="nav nav-tabs nav-line-tabs nav-line-tabs-2x fs-6">
+        <!-- Allowed Pages -->
+        <li *ngIf="selectedUser" class="nav-item">
+          <a class="nav-link text-active-primary active" data-bs-toggle="tab">
+            {{ "Settings.UserRoles.Tab.AllowedPages" | translate }}
+          </a>
+        </li>
+      </ul>
+      <!-- End: Tabs -->
+    </div>
+  </div>
+</div>
+
+<div *ngIf="selectedUser" class="flex-column-fluid card mt-10">
+  <div class="card-body">
+    <app-allowed-pages></app-allowed-pages>
+  </div>
+</div>

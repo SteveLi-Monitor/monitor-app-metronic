@@ -32,6 +32,11 @@ export const environment = {
                 description: 'AsideMenu.Page.UserRoles',
                 routerLink: '/settings/user-roles',
               },
+              {
+                id: 'Users',
+                description: 'AsideMenu.Page.Users',
+                routerLink: '/settings/users',
+              },
             ],
           },
         ],

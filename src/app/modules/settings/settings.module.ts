@@ -10,9 +10,15 @@ import { SettingsRoutingModule } from './settings-routing.module';
 import { SettingsComponent } from './settings/settings.component';
 import { UserRolesComponent } from './settings/user-roles/user-roles.component';
 import { AllowedPagesComponent } from './settings/shared/allowed-pages/allowed-pages.component';
+import { UsersComponent } from './settings/users/users.component';
 
 @NgModule({
-  declarations: [SettingsComponent, UserRolesComponent, AllowedPagesComponent],
+  declarations: [
+    SettingsComponent,
+    UserRolesComponent,
+    AllowedPagesComponent,
+    UsersComponent,
+  ],
   imports: [
     CommonModule,
     ReactiveFormsModule,

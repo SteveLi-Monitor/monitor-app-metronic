@@ -11,9 +11,20 @@ export class UsersClient {
 
   constructor(private httpClient: HttpClient) {}
 
+  getAll(): Observable<GetAllResp> {
+    return this.httpClient.get<GetAllResp>(this.baseUrl);
+  }
+
   signIn(req: SignInReq): Observable<SignInResp> {
     return this.httpClient.post<SignInResp>(this.baseUrl + '/SignIn', req);
   }
+}
+
+export interface GetAllResp {
+  users: {
+    id: string;
+    username: string;
+  }[];
 }
 
 export interface SignInReq {
