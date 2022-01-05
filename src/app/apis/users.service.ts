@@ -23,6 +23,15 @@ export class UsersClient {
   signIn(req: SignInReq): Observable<SignInResp> {
     return this.httpClient.post<SignInResp>(this.baseUrl + '/SignIn', req);
   }
+
+  updateUserRoleAndUiComponents(
+    req: UpdateUserRoleAndUiComponentsReq
+  ): Observable<Object> {
+    return this.httpClient.post(
+      this.baseUrl + '/UpdateUserRoleAndUiComponents',
+      req
+    );
+  }
 }
 
 export interface GetAllResp {
@@ -53,4 +62,10 @@ export interface SignInReq {
 
 export interface SignInResp {
   token: string;
+}
+
+export interface UpdateUserRoleAndUiComponentsReq {
+  id: string;
+  userRoleId: number | undefined;
+  uiComponents: UiComponent[];
 }

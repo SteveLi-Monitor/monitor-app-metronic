@@ -1,5 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
+import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { Subscription } from 'rxjs';
 import { UiComponent, UserRolesClient } from 'src/app/apis/user-roles.service';
 import { UsersClient } from 'src/app/apis/users.service';
@@ -16,9 +18,13 @@ import { User } from './users.model';
 export class UsersComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
 
+  @ViewChild('successSwal')
+  private successSwalComponent: SwalComponent | undefined;
+
   constructor(
     private usersClient: UsersClient,
-    private userRolesClient: UserRolesClient
+    private userRolesClient: UserRolesClient,
+    private translateService: TranslateService
   ) {
     this.initUserFc();
     this.initUserRoleFc();
@@ -71,6 +77,39 @@ export class UsersComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.getUsers();
     this.getUserRoles();
+  }
+
+  onUpdate(): void {
+    let uiComponents: UiComponent[] = [];
+    if (this.isAllowedPagesOverridden || this.userRoleFc?.invalid) {
+      uiComponents = this.allowedPages.map((allowedPage) => {
+        return {
+          section: allowedPage.section.id,
+          module: allowedPage.module.id,
+          page: allowedPage.page.id,
+          isAuthorized: allowedPage.isAuthorized,
+        };
+      });
+    }
+
+    const subs = this.usersClient
+      .updateUserRoleAndUiComponents({
+        id: this.userFc?.value.id,
+        userRoleId: this.userRoleFc?.value?.id,
+        uiComponents: uiComponents,
+      })
+      .subscribe(() => {
+        if (this.successSwalComponent) {
+          this.successSwalComponent.text = this.translateService.instant(
+            'Common.Message.UpdateSuccessfully'
+          );
+          this.successSwalComponent.fire();
+        }
+
+        this.reload();
+      });
+
+    this.subscriptions.push(subs);
   }
 
   private initUserFc(): void {
@@ -177,6 +216,14 @@ export class UsersComponent implements OnInit, OnDestroy {
     });
 
     this.allowedPages = allowedPagesCopy;
+  }
+
+  private reload(): void {
+    this.initUserFc();
+    this.initUserRoleFc();
+    this.initAllowedPages();
+    this.getUsers();
+    this.getUserRoles();
   }
 
   ngOnDestroy(): void {
