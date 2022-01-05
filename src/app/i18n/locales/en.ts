@@ -81,6 +81,9 @@ export const EnLocale = {
           User: 'User',
           UserRole: 'User Role',
         },
+        Span: {
+          Overridden: 'Overridden',
+        },
       },
     },
   },

@@ -3,7 +3,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { Subscription } from 'rxjs';
-import { UserRolesClient } from 'src/app/apis/user-roles.service';
+import { UiComponent, UserRolesClient } from 'src/app/apis/user-roles.service';
 import { environment } from 'src/environments/environment';
 import { AllowedPage } from '../shared/allowed-pages/allowed-pages.model';
 import { UserRole } from './user-roles.model';
@@ -134,29 +134,12 @@ export class UserRolesComponent implements OnInit, OnDestroy {
 
     const subs = this.userRoleFc.valueChanges.subscribe(
       (userRole: UserRole | null) => {
-        if (userRole === null) {
-        } else {
-          const allowedPagesCopy: AllowedPage[] = JSON.parse(
-            JSON.stringify(this.allowedPages)
-          );
-
-          userRole.uiComponents.forEach((uiComponent) => {
-            const allowPage = allowedPagesCopy.find(
-              (x) =>
-                x.section.id === uiComponent.section &&
-                x.module.id === uiComponent.module &&
-                x.page.id === uiComponent.page
-            );
-
-            if (allowPage) {
-              allowPage.isAuthorized = uiComponent.isAuthorized;
-            }
-          });
-
-          this.allowedPages = allowedPagesCopy;
+        if (userRole !== null) {
+          this.updateAllowedPages(userRole.uiComponents);
         }
       }
     );
+
     this.subscriptions.push(subs);
   }
 
@@ -188,6 +171,27 @@ export class UserRolesComponent implements OnInit, OnDestroy {
     });
 
     this.subscriptions.push(subs);
+  }
+
+  private updateAllowedPages(uiComponents: UiComponent[]): void {
+    const allowedPagesCopy: AllowedPage[] = JSON.parse(
+      JSON.stringify(this.allowedPages)
+    );
+
+    uiComponents.forEach((uiComponent) => {
+      const allowPage = allowedPagesCopy.find(
+        (x) =>
+          x.section.id === uiComponent.section &&
+          x.module.id === uiComponent.module &&
+          x.page.id === uiComponent.page
+      );
+
+      if (allowPage) {
+        allowPage.isAuthorized = uiComponent.isAuthorized;
+      }
+    });
+
+    this.allowedPages = allowedPagesCopy;
   }
 
   private reload(): void {

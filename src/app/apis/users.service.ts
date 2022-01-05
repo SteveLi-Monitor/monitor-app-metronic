@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { UiComponent } from './user-roles.service';
 
 @Injectable({
   providedIn: 'root',
@@ -15,6 +16,10 @@ export class UsersClient {
     return this.httpClient.get<GetAllResp>(this.baseUrl);
   }
 
+  getById(id: string): Observable<GetByIdResp> {
+    return this.httpClient.get<GetByIdResp>(`${this.baseUrl}/${id}`);
+  }
+
   signIn(req: SignInReq): Observable<SignInResp> {
     return this.httpClient.post<SignInResp>(this.baseUrl + '/SignIn', req);
   }
@@ -25,6 +30,19 @@ export interface GetAllResp {
     id: string;
     username: string;
   }[];
+}
+
+export interface GetByIdResp {
+  user: {
+    id: string;
+    username: string;
+    uiComponents: UiComponent[];
+    userRole: {
+      id: number;
+      name: string;
+      uiComponents: UiComponent[];
+    } | null;
+  };
 }
 
 export interface SignInReq {
