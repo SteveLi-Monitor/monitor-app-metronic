@@ -1,6 +1,29 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { AuthGuard } from './modules/auth/auth.guard';
+import { Injectable, NgModule } from '@angular/core';
+import {
+  CanLoad,
+  Route,
+  Router,
+  RouterModule,
+  Routes,
+  UrlSegment,
+  UrlTree,
+} from '@angular/router';
+import { AuthService } from './modules/auth/auth.service';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class CanLoadLayoutModule implements CanLoad {
+  constructor(private authService: AuthService, private router: Router) {}
+
+  canLoad(route: Route, segments: UrlSegment[]): boolean | UrlTree {
+    if (!this.authService.isSignedIn) {
+      return this.router.parseUrl('/auth/login');
+    }
+
+    return true;
+  }
+}
 
 const routes: Routes = [
   {
@@ -10,9 +33,9 @@ const routes: Routes = [
   },
   {
     path: '',
-    canActivate: [AuthGuard],
     loadChildren: () =>
       import('./modules/layout/layout.module').then((m) => m.LayoutModule),
+    canLoad: [CanLoadLayoutModule],
   },
 ];
 

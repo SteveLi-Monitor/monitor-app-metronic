@@ -20,6 +20,12 @@ export class UsersClient {
     return this.httpClient.get<GetByIdResp>(`${this.baseUrl}/${id}`);
   }
 
+  getUiComponentsById(id: string): Observable<GetUiComponentsByIdResp> {
+    return this.httpClient.get<GetUiComponentsByIdResp>(
+      `${this.baseUrl}/UiComponents/${id}`
+    );
+  }
+
   signIn(req: SignInReq): Observable<SignInResp> {
     return this.httpClient.post<SignInResp>(this.baseUrl + '/SignIn', req);
   }
@@ -52,6 +58,10 @@ export interface GetByIdResp {
       uiComponents: UiComponent[];
     } | null;
   };
+}
+
+export interface GetUiComponentsByIdResp {
+  uiComponents: UiComponent[];
 }
 
 export interface SignInReq {

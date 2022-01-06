@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { UiComponent } from 'src/app/apis/user-roles.service';
 import { UsersClient } from 'src/app/apis/users.service';
 import { JwtService } from 'src/app/modules/auth/jwt.service';
 import { environment } from 'src/environments/environment';
@@ -26,72 +25,47 @@ export class AsideMenuComponent implements OnInit, OnDestroy {
       JSON.stringify(environment.asideMenu)
     ) as AsideMenu;
 
-    const subs = this.usersClient.getById(user!.id).subscribe((resp) => {
-      let uiComponents: UiComponent[] = [];
+    const subs = this.usersClient
+      .getUiComponentsById(user!.id)
+      .subscribe((resp) => {
+        let asideMenu: AsideMenu = {
+          sections: [],
+        };
 
-      if (resp.user.userRole) {
-        uiComponents = resp.user.userRole.uiComponents;
-      }
-      if (resp.user.uiComponents.length !== 0) {
-        uiComponents = resp.user.uiComponents;
-      }
-
-      let asideMenu: AsideMenu = {
-        sections: [],
-      };
-
-      asideMenuFromEnv.sections.forEach((section) => {
-        section.modules.forEach((module) => {
-          module.pages.forEach((page) => {
-            const uiComponent = uiComponents.find(
-              (x) =>
-                x.section === section.id &&
-                x.module === module.id &&
-                x.page === page.id
-            );
-
-            if (uiComponent?.isAuthorized) {
-              const existingSection = asideMenu.sections.find(
-                (x) => x.id === section.id
+        asideMenuFromEnv.sections.forEach((section) => {
+          section.modules.forEach((module) => {
+            module.pages.forEach((page) => {
+              const uiComponent = resp.uiComponents.find(
+                (x) =>
+                  x.section === section.id &&
+                  x.module === module.id &&
+                  x.page === page.id
               );
 
-              if (existingSection) {
-                const existingModule = existingSection.modules.find(
-                  (x) => x.id === module.id
+              if (uiComponent?.isAuthorized) {
+                const existingSection = asideMenu.sections.find(
+                  (x) => x.id === section.id
                 );
 
-                if (existingModule) {
-                  const existingPage = existingModule.pages.find(
-                    (x) => x.id === page.id
+                if (existingSection) {
+                  const existingModule = existingSection.modules.find(
+                    (x) => x.id === module.id
                   );
 
-                  if (!existingPage) {
-                    existingModule.pages.push({
-                      id: page.id,
-                      description: page.description,
-                      routerLink: page.routerLink,
-                    });
-                  }
-                } else {
-                  existingSection.modules.push({
-                    id: module.id,
-                    description: module.description,
-                    svg: module.svg,
-                    pages: [
-                      {
+                  if (existingModule) {
+                    const existingPage = existingModule.pages.find(
+                      (x) => x.id === page.id
+                    );
+
+                    if (!existingPage) {
+                      existingModule.pages.push({
                         id: page.id,
                         description: page.description,
                         routerLink: page.routerLink,
-                      },
-                    ],
-                  });
-                }
-              } else {
-                asideMenu.sections.push({
-                  id: section.id,
-                  description: section.description,
-                  modules: [
-                    {
+                      });
+                    }
+                  } else {
+                    existingSection.modules.push({
                       id: module.id,
                       description: module.description,
                       svg: module.svg,
@@ -102,23 +76,41 @@ export class AsideMenuComponent implements OnInit, OnDestroy {
                           routerLink: page.routerLink,
                         },
                       ],
-                    },
-                  ],
-                });
+                    });
+                  }
+                } else {
+                  asideMenu.sections.push({
+                    id: section.id,
+                    description: section.description,
+                    modules: [
+                      {
+                        id: module.id,
+                        description: module.description,
+                        svg: module.svg,
+                        pages: [
+                          {
+                            id: page.id,
+                            description: page.description,
+                            routerLink: page.routerLink,
+                          },
+                        ],
+                      },
+                    ],
+                  });
+                }
               }
-            }
+            });
           });
         });
+
+        this.asideMenu = asideMenu;
+
+        if (!environment.production) {
+          this.asideMenu!.sections.push(
+            JSON.parse(JSON.stringify(environment.devOnlySection))
+          );
+        }
       });
-
-      this.asideMenu = asideMenu;
-
-      if (!environment.production) {
-        this.asideMenu!.sections.push(
-          JSON.parse(JSON.stringify(environment.devOnlySection))
-        );
-      }
-    });
 
     this.subscriptions.push(subs);
   }
